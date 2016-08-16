@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup
-setup(setup_requires=['pbr'], pbr=True, package_dir={'': 'src'}, package=['AppiumLibrary','AppiumLibrary.keywords','AppiumLibrary.locators',
+setup(setup_requires=['pbr'], pbr=True, package_dir={'': 'src'}, packages=['AppiumLibrary','AppiumLibrary.keywords','AppiumLibrary.locators',
                       'AppiumLibrary.utils','AppiumLibrary.utils.events'])
 
 # execfile(join(dirname(__file__), 'src', 'AppiumLibrary', 'version.py'))
