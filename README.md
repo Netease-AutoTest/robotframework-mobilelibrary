@@ -5,7 +5,7 @@ Only support python 2.x.
 
 ## Install
 ### pip 
-```pip install mobilelibrary```
+```pip install robotframework-mobilelibrary```
 
 ### local
 ```
