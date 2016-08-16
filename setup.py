@@ -8,6 +8,8 @@ from ez_setup import use_setuptools
 use_setuptools()
 from setuptools import setup
 
+setup(setup_requires=['pbr'], pbr=True, package_dir={'': 'src'}, package=["AppiumLibrary"])
+
 execfile(join(dirname(__file__), 'src', 'AppiumLibrary', 'version.py'))
 
 setup(name         = 'robotframework-mobilelibrary',
