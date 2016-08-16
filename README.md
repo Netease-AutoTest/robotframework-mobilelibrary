@@ -9,7 +9,7 @@ Only support python 2.x.
 
 ### local
 ```
-git clone  https://***
+git clone https://github.com/Netease-AutoTest/robotframework-mobilelibrary.git
 cd robotframework-mobilelibrary
 python setup.py install
 
