@@ -119,9 +119,9 @@ class _MobileKeywords(KeywordGroup):
             #mylocator = 'xpath=//android.widget.Button[@text=' + '"' + text + '"]'
         if self._is_ios():
             #iOS example: id=登录 
-            mylocator = 'name=' + text
-            #mylocator = 'id=' + text        
-
+            #mylocator = 'name=' + text
+            #mylocator = 'id=' + text
+            mylocator = 'accessibility_id=' + text
         self.Mobile_Click_Element(mylocator, target_num)
 
     def Mobile_Long_Press(self, locator, target_num=1):
@@ -303,42 +303,57 @@ class _MobileKeywords(KeywordGroup):
         self.wait_until_page_contains_element(locator)
         self._click_webview_element_autoswipe(locator, target_num)
 
-
     def Mobile_Get_Elements_Num(self, locator):
         """返回符合locator定义的元素的个数 0-n
- 
+
         | Mobile Get Elements Num | ${locator} |
         | Mobile Get Elements Num | identifier=myid |
         | ${element_num} | Mobile Get Elements Num | identifier=myid |
         """
-        (prefix, criteria) = self._element_finder._parse_locator(locator)
-        if self._is_ios() and 'name' in prefix:
-            return self._locate_elements_from_source(prefix, criteria, predicate_attr='visible', predicate_val='true')
-        
+
         try:
             self.wait_until_page_contains_element(locator)
             elements_list = self.get_elements(locator)
-            #self._debug("[debug] Mobile_Get_Elements_Num: try step2 elements_list: %d!" % len(elements_list))
+            # self._debug("[debug] Mobile_Get_Elements_Num: try step2 elements_list: %d!" % len(elements_list))
             return len(elements_list)
         except Exception:
-            #self._debug("[debug] Mobile_Get_Elements_Num: except path!")
-            return 0        
+            # self._debug("[debug] Mobile_Get_Elements_Num: except path!")
+            return 0
 
     def Mobile_Get_Text_Button_Num(self, text):
         """返回匹配‘text’的文本/按钮元素的个数 0-n
- 
+
         | Mobile Get Text Button Num | ${text} |
         | Mobile Get Text Button Num | 登录 |
         | ${element_num} | Mobile Get Text Button Num| 登录 |
         """
         if self._is_android():
-            #Android example:   xpath=//*[@text="登录"]
+            # Android example:   xpath=//*[@text="登录"]
             mylocator = 'xpath=//*[@text=' + '"' + text + '"]'
         if self._is_ios():
-            #iOS example: id=登录 
-            #mylocator = 'identifier=' + text
-            mylocator = 'name=' + text
+            # iOS example: id=登录
+            # mylocator = 'identifier=' + text
+            # mylocator = 'name=' + text
+            mylocator = 'accessibility_id=' + text
         return self.Mobile_Get_Elements_Num(mylocator)
+
+    def Mobile_Get_Text_Button_Num_By_Source(self, text):
+        """iOS only
+            由于appium v1.5取消了name定位方式，增加该关键字通过page source获得文本/按钮个数
+            只统计visible为true的文本/按钮个数
+
+        | Mobile Get Text Button Num By Source | ${text} |
+        | Mobile Get Text Button Num By Source| 登录 |
+        | ${element_num} | Mobile Get Text Button Num By Source| 登录 |
+        :return: 匹配‘text’的文本/按钮元素的可见个数
+        """
+        if self._is_ios():
+            locator = 'name=' + text
+            (prefix, criteria) = self._element_finder._parse_locator(locator)
+            return self._locate_elements_from_source(prefix, criteria, predicate_attr='visible',
+                                                     predicate_val='true')
+        if self._is_android():
+            raise ValueError("This keyword does not support Android")
 
     def Mobile_Press_Keycode(self, keycode):
         """Android Only，向Android系统下发keycode按键事件
