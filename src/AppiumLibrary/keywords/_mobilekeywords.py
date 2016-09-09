@@ -105,6 +105,8 @@ class _MobileKeywords(KeywordGroup):
         [不输入（默认值）:   点击第一个元素]
         [=0 :                点击最后一个元素]
         [=x（>0）:           点击第x个元素]
+
+        appium v1.5以后取消name定位方式，改用accessibility_id代替
         
         | Mobile Click Text Button | ${text} |
         IOS/Android:
@@ -322,6 +324,7 @@ class _MobileKeywords(KeywordGroup):
 
     def Mobile_Get_Text_Button_Num(self, text):
         """返回匹配‘text’的文本/按钮元素的个数 0-n
+        appium v1.5以后取消name定位方式，改用accessibility_id代替
 
         | Mobile Get Text Button Num | ${text} |
         | Mobile Get Text Button Num | 登录 |
@@ -339,7 +342,7 @@ class _MobileKeywords(KeywordGroup):
 
     def Mobile_Get_Text_Button_Num_By_Source(self, text):
         """iOS only
-            由于appium v1.5取消了name定位方式，增加该关键字通过page source获得文本/按钮个数
+            appium v1.5取消了name定位方式，增加该关键字通过page source获得文本/按钮个数
             只统计visible为true的文本/按钮个数
 
         | Mobile Get Text Button Num By Source | ${text} |
